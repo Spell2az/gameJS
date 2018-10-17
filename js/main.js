@@ -6,7 +6,12 @@ window.onload = () => {
   drawFrame();
 
   function drawFrame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     draw();
+    x++;
+
+    window.requestAnimationFrame(drawFrame);
+    
   }
 
   function draw() {
