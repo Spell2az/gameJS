@@ -21,26 +21,34 @@ window.onload = () => {
     
   }
   
+window.addEventListener("keydown", keyDownEventHandler);
+window.addEventListener("keyup", keyUpEventHandler);
   
-  function draw() {
+  function keyDownEventHandler(e) {
     
-    player.draw(ctx);
-    //square.draw(ctx);
-    // ctx.translate(50, 50);
-    // ctx.fillRect(0,0,100,100);
-    // ctx.setTransform(1, 0, 0, 1, 0, 0);
-    // const path = new Path2D('M 100,100 h 50 v 50 h 50');
-    // ctx.rotate(30 * Math.PI / 180);
-    // ctx.stroke(path);
-    // ctx.setTransform(1, 0, 0, 1, 0, 0);
-    // const path1 = new Path2D(`M 50,50 h 50 v 50 h 50`);
-    // ctx.rotate(40 * Math.PI / 180);
-    // //ctx.translate(x, 50);
-    // ctx.stroke(path1);
-    // ctx.setTransform(1, 0, 0, 1, 0, 0);
+    if (e.keyCode == 87) {
+      player.setThrust(true);
+    }
+    else if (e.keyCode == 65) {
+      player.decreaseAngleVelocity();
+    }
+    else if (e.keyCode == 68) {
+      player.increaseAngleVelocity();
+    }
+    else if (e.code == "Space"){
+       console.table(player.pos)
+    }
+  }
     
-    
-    
+  function keyUpEventHandler(e) {
+    if (e.keyCode == 87) {
+      player.setThrust(false);
+    } else if (e.keyCode == 65) {
+      player.increaseAngleVelocity();
+    } else if (e.keyCode == 68) {
+      player.decreaseAngleVelocity();
   }
   
 }
+}
+
