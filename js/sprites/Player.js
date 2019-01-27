@@ -7,19 +7,61 @@ class Player {
     this.thrust = false;
   }
 
-    
+  
 
 }
 Player.prototype.draw = function (ctx) {
  
   this.update();
-   ctx.save();
+  ctx.save();
   ctx.translate(this.pos.x, this.pos.y)
   ctx.rotate(this.angle * Math.PI / 180);
   this.drawPlayer(ctx);
-    ctx.restore();
+  ctx.restore();
+ 
+}
+
+Player.prototype.update = function () {
+  this.angle += this.angleVelocity;
+  
+
+  if( (this.pos.x + this.v.x) < -50){
+    this.pos.x = WIDTH;
+  }
+  else{
+    this.pos.x = (this.pos.x + this.v.x) % WIDTH;
+  }
+
+   if ((this.pos.y + this.v.y) < -50) {
+     this.pos.y = HEIGHT;
+   } else {
+     this.pos.y = (this.pos.y + this.v.y) % HEIGHT;
+   }
+  
+  if (this.thrust) {
+    const acc = angleToVector(this.angle);
+    this.v.x += acc[0] * 0.1;
+    this.v.y += acc[1] * 0.1;
+  }
+
+  this.v.x *= 0.99;
+  this.v.y *= 0.99;
+}
+
+Player.prototype.increaseAngleVelocity = function () {
+  this.angleVelocity += 0.15;
+}
+
+Player.prototype.decreaseAngleVelocity = function () {
+  this.angleVelocity -= 0.15;
+}
+
+Player.prototype.setThrust = function (isThrustOn) {
+  this.thrust = isThrustOn;
+}
+
 Player.prototype.drawPlayer = function(ctx) {
-    ctx.save();
+  ctx.save();
   ctx.scale(0.3, 0.3);
   ctx.rotate(0.5 * Math.PI);
   
@@ -30,23 +72,23 @@ Player.prototype.drawPlayer = function(ctx) {
   // Fill with gradient
   //ctx.strokeStyle = gradient;
   ctx.fillRect(0,0,10,10);
-    ctx.beginPath();
+  ctx.beginPath();
   ctx.fillStyle = gradient;
 
   // Left GunPod
-    ctx.beginPath();
+  ctx.beginPath();
   ctx.ellipse(-50, -5, 10, 50, 0, 0, 2 * Math.PI);
 
-    ctx.fill();
-    ctx.stroke();
+  ctx.fill();
+  ctx.stroke();
 
   //Right GunPod
-    ctx.beginPath();
+  ctx.beginPath();
   ctx.ellipse(50, -5, 10, 50, 0, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.stroke();
+  ctx.fill();
+  ctx.stroke();
   // wings
-    ctx.beginPath();
+  ctx.beginPath();
 
   ctx.fillStyle = "black";
 
@@ -61,46 +103,46 @@ Player.prototype.drawPlayer = function(ctx) {
   ctx.lineTo(-20, -35);
   ctx.lineTo(-20, -55);
   ctx.lineTo(-30, -65);
-    ctx.fill();
-    ctx.stroke();
+  ctx.fill();
+  ctx.stroke();
   // body
-    ctx.beginPath();
+  ctx.beginPath();
   ctx.fillStyle = gradient;
   ctx.moveTo(-30, 105);
   ctx.bezierCurveTo(-40, -155, 40, -155, 30, 105);
   ctx.lineTo(-30, 105);
-    ctx.fill();
-    ctx.stroke();
+  ctx.fill();
+  ctx.stroke();
 
   ctx.fillStyle = "black";
   ctx.fillRect(-20, 105, 40, 10);
   
   //Cockpit
-    ctx.beginPath();
+  ctx.beginPath();
   ctx.fillStyle = "red";
   ctx.ellipse(0, -15, 10, 30, 0, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.stroke();
+  ctx.fill();
+  ctx.stroke();
 
-    ctx.beginPath();
+  ctx.beginPath();
   ctx.setLineDash([5, 5]);
   ctx.moveTo(-10, 105);
   ctx.lineTo(-10, -25);
-    ctx.stroke();
+  ctx.stroke();
 
-    ctx.beginPath();
+  ctx.beginPath();
   ctx.setLineDash([5, 5]);
   ctx.moveTo(10, 105);
   ctx.lineTo(10, -25);
-    ctx.stroke();
+  ctx.stroke();
 
-    ctx.beginPath();
+  ctx.beginPath();
   ctx.setLineDash([5, 5]);
   ctx.moveTo(0, 105);
   ctx.lineTo(0, 15);
-    ctx.stroke();
+  ctx.stroke();
 
-    ctx.restore();
+  ctx.restore();
 }
 
 // Player.prototype.drawPlayer = function(ctx) {
@@ -161,13 +203,13 @@ Player.prototype.drawPlayer = function(ctx) {
 //   ctx.ellipse(90, 90, 10, 30, 0, 0, 2 * Math.PI);
 //   ctx.fill();
 //   ctx.stroke();
-    
+
 //   ctx.beginPath();
 //   ctx.setLineDash([5, 5]);
 //   ctx.moveTo(80, 210);
 //   ctx.lineTo(80, 80);
 //   ctx.stroke();
-    
+
 //   ctx.beginPath();
 //   ctx.setLineDash([5, 5]);
 //   ctx.moveTo(100, 210);
@@ -179,5 +221,5 @@ Player.prototype.drawPlayer = function(ctx) {
 //   ctx.moveTo(90, 210);
 //   ctx.lineTo(90, 120);
 //   ctx.stroke();
-    
+
 // }
