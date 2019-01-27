@@ -6,24 +6,24 @@ window.onload = () => {
   const canvas = document.getElementById('canvas');
   
   const ctx = canvas.getContext('2d');
-  console.log(ctx)
-  const player = new Player(0, 0);
-  let x = 0, y = 0;
+  
+  const player = new Player({x:WIDTH/2, y: HEIGHT/2});
+  
  
   drawFrame();
 
   function drawFrame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
      
-    draw();
-   player.x += 1;
+    player.draw(ctx);
+    
     window.requestAnimationFrame(drawFrame);
     
   }
   
 window.addEventListener("keydown", keyDownEventHandler);
 window.addEventListener("keyup", keyUpEventHandler);
-  
+
   function keyDownEventHandler(e) {
     
     if (e.keyCode == 87) {
@@ -39,7 +39,7 @@ window.addEventListener("keyup", keyUpEventHandler);
        console.table(player.pos)
     }
   }
-    
+
   function keyUpEventHandler(e) {
     if (e.keyCode == 87) {
       player.setThrust(false);
@@ -47,8 +47,8 @@ window.addEventListener("keyup", keyUpEventHandler);
       player.increaseAngleVelocity();
     } else if (e.keyCode == 68) {
       player.decreaseAngleVelocity();
+    }
+
   }
-  
-}
 }
 
