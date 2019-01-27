@@ -1,11 +1,15 @@
 class Player {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
+  constructor(pos = {x: 0, y: 0}, angle = 0) {
+    this.pos = {...pos}
+    this.v = {x: 0, y: 0}
+    this.angleVelocity = 0;
+    this.angle = angle;
+    this.thrust = false;
   }
 
-  draw(ctx) {
     
+
+}
 Player.prototype.draw = function (ctx) {
  
   this.update();
