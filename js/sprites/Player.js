@@ -6,15 +6,13 @@ class Player {
 
   draw(ctx) {
     
+Player.prototype.draw = function (ctx) {
+ 
+  this.update();
    ctx.save();
-    ctx.translate(0 + this.x, 0);
-    ctx.strokeStyle = "rgba(0,0,0,0)";
-    ctx.miterLimit = 4;
-    ctx.font = "normal normal 400 normal 15px / 21.4286px ''";
-    ctx.font = "15px ";
-    ctx.scale(0.1007936507936508, 0.1007936507936508);
-    ctx.scale(3.7795275590551185, 3.7795275590551185);
-    ctx.save();
+  ctx.translate(this.pos.x, this.pos.y)
+  ctx.rotate(this.angle * Math.PI / 180);
+  this.drawPlayer(ctx);
     ctx.restore();
 Player.prototype.drawPlayer = function(ctx) {
     ctx.save();
