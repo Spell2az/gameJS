@@ -1,11 +1,43 @@
 body {
   background-color: aquamarine;
+
 }
 
 #canvas {
-  background-color: blanchedalmond;
+  background-color: transparent;
+}
+
+.canvas-bg {
+  width: 800px;
+  height: 600px;
+  background-image: url('../img/blue_nebula.png');
+  overflow: hidden;
+}
+
+.canvas-bg-animated {
+  position: relative;
+  width: 1920px;
+  height: 600px;
+  background: url('../img/debris.png');
+  background-repeat: repeat;
+  animation: slide 120s linear infinite;
+
+}
+
+body>* {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+
+@keyframes slide {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(-1280px, 0);
+  }
 }
