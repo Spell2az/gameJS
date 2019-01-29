@@ -17,3 +17,27 @@ function getDistanceBetweenTwoPoints(point1, point2){
 function getRandom(min, max) {
   return Math.random() * (max - min) + min;
 }
+
+function groupCollide(group, otherObject){
+ 
+  for (let index = 0; index < group.length; index++) {
+    const element = group[index];
+    if(element.collide(otherObject)) {
+      group.splice(index, 1)
+      return true
+    }
+  }
+  return false
+}
+
+function twoGroupCollide(group1, group2){
+  let collisions = 0;
+  group1.forEach((group1Object, index) =>{ 
+    if(groupCollide(group2, group1Object)){
+      collisions+=1;
+      group1.splice(index, 1)
+    }}
+  )
+
+  return collisions;
+}
