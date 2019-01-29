@@ -1,6 +1,6 @@
 class Player {
-  constructor(pos = {x: 0, y: 0}, angle = 0) {
-    this.pos = {...pos}
+  constructor(position = {x: 0, y: 0}, angle = 0) {
+    this.position = {...position}
     this.v = {x: 0, y: 0}
     this.angleVelocity = 0;
     this.angle = angle;
@@ -14,7 +14,7 @@ Player.prototype.draw = function (ctx) {
  
   this.update();
   ctx.save();
-  ctx.translate(this.pos.x, this.pos.y)
+  ctx.translate(this.position.x, this.position.y)
   ctx.rotate(this.angle * Math.PI / 180);
   this.drawPlayer(ctx);
   ctx.restore();
@@ -25,17 +25,17 @@ Player.prototype.update = function () {
   this.angle += this.angleVelocity;
   
 
-  if( (this.pos.x + this.v.x) < -50){
-    this.pos.x = WIDTH;
+  if( (this.position.x + this.v.x) < -50){
+    this.position.x = WIDTH;
   }
   else{
-    this.pos.x = (this.pos.x + this.v.x) % WIDTH;
+    this.position.x = (this.position.x + this.v.x) % WIDTH;
   }
 
-   if ((this.pos.y + this.v.y) < -50) {
-     this.pos.y = HEIGHT;
+   if ((this.position.y + this.v.y) < -50) {
+     this.position.y = HEIGHT;
    } else {
-     this.pos.y = (this.pos.y + this.v.y) % HEIGHT;
+     this.position.y = (this.position.y + this.v.y) % HEIGHT;
    }
   
   if (this.thrust) {
