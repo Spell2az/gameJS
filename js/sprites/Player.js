@@ -5,6 +5,7 @@ class Player {
     this.angleVelocity = 0;
     this.angle = angle;
     this.thrust = false;
+    this.radius = 25
   }
 
   
@@ -17,6 +18,14 @@ Player.prototype.draw = function (ctx) {
   ctx.translate(this.position.x, this.position.y)
   ctx.rotate(this.angle * Math.PI / 180);
   this.drawPlayer(ctx);
+  
+   ctx.strokeStyle = "lime"
+   ctx.beginPath();
+   ctx.arc(0, 0, this.radius, 0, 2 * Math.PI);
+   ctx.lineTo(0, 0);
+   ctx.stroke();
+   ctx.closePath();
+
   ctx.restore();
  
 }
@@ -47,6 +56,8 @@ Player.prototype.update = function () {
   this.velocity.x *= 0.99;
   this.velocity.y *= 0.99;
 }
+
+//Player.prototype.collide
 
 Player.prototype.increaseAngleVelocity = function () {
   this.angleVelocity += 0.15;
@@ -88,9 +99,10 @@ Player.prototype.drawPlayer = function(ctx) {
   ctx.fill();
   ctx.stroke();
   // wings
-  ctx.beginPath();
 
-  ctx.fillStyle = "black";
+  ctx.beginPath();
+  ctx.strokeStyle= "white";
+  ctx.fillStyle = "white";
 
   ctx.moveTo(-30, -65);
   ctx.lineTo(-90, 125);
@@ -140,8 +152,10 @@ Player.prototype.drawPlayer = function(ctx) {
   ctx.setLineDash([5, 5]);
   ctx.moveTo(0, 105);
   ctx.lineTo(0, 15);
+  
+  ctx.fill();
   ctx.stroke();
-
+  
   ctx.restore();
 }
 
