@@ -1,10 +1,11 @@
 class Asteroid {
-  constructor (position = {x : 0, y: 0}, angle, velocity, angleVelocity, radius){
+  constructor (position = {x : 0, y: 0}, angle, velocity, angleVelocity, radius, img){
     this.position = {...position}
     this.velocity = {...velocity}
     this.angle = angle;
     this.angleVelocity = angleVelocity;
     this.radius = radius;
+    this.img = img;
   }
 }
 
@@ -14,15 +15,30 @@ Asteroid.prototype.draw = function (ctx) {
   ctx.translate(this.position.x, this.position.y)
   ctx.rotate(this.angle);
   ctx.fillStyle = "red";
+  // ctx.beginPath();
+  // ctx.arc(0 , 0, this.radius, 0, 2 * Math.PI);
+  // ctx.lineTo(0 , 0);
+  // ctx.closePath();
+  ctx.strokeStyle = "lime"
   ctx.beginPath();
-  ctx.arc(0 , 0, this.radius, 0, 2 * Math.PI);
-  ctx.lineTo(0 , 0)
-  ctx.fill();
+  ctx.arc(0, 0, this.radius, 0, 2 * Math.PI);
+  ctx.lineTo(0, 0);
+  ctx.closePath();
+
   ctx.stroke();
+  ctx.scale(2, 2)
+  ctx.drawImage(this.img, -this.radius/2 , -this.radius/2, this.radius, this.radius)
+ // ctx.arc(0, 0, this.radius, 0, 2 * Math.PI);
+ 
+  
   ctx.restore();
   this.update();
 }
 
+Asteroid.prototype.collide = function(object) {
+  
+  return getDistanceBetweenTwoPoints([this.position.x, this.position.y], [object.position.x, object.position.y]) <= this.radius + object.radius
+}
 
 Asteroid.prototype.update = function () {
   
