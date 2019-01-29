@@ -1,7 +1,7 @@
 class Player {
   constructor(position = {x: 0, y: 0}, angle = 0) {
     this.position = {...position}
-    this.v = {x: 0, y: 0}
+    this.velocity = {x: 0, y: 0}
     this.angleVelocity = 0;
     this.angle = angle;
     this.thrust = false;
@@ -25,27 +25,27 @@ Player.prototype.update = function () {
   this.angle += this.angleVelocity;
   
 
-  if( (this.position.x + this.v.x) < -50){
+  if( (this.position.x + this.velocity.x) < -50){
     this.position.x = WIDTH;
   }
   else{
-    this.position.x = (this.position.x + this.v.x) % WIDTH;
+    this.position.x = (this.position.x + this.velocity.x) % WIDTH;
   }
 
-   if ((this.position.y + this.v.y) < -50) {
+   if ((this.position.y + this.velocity.y) < -50) {
      this.position.y = HEIGHT;
    } else {
-     this.position.y = (this.position.y + this.v.y) % HEIGHT;
+     this.position.y = (this.position.y + this.velocity.y) % HEIGHT;
    }
   
   if (this.thrust) {
     const acc = angleToVector(this.angle);
-    this.v.x += acc[0] * 0.1;
-    this.v.y += acc[1] * 0.1;
+    this.velocity.x += acc[0] * 0.1;
+    this.velocity.y += acc[1] * 0.1;
   }
 
-  this.v.x *= 0.99;
-  this.v.y *= 0.99;
+  this.velocity.x *= 0.99;
+  this.velocity.y *= 0.99;
 }
 
 Player.prototype.increaseAngleVelocity = function () {
