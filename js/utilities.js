@@ -18,11 +18,26 @@ function getRandom(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-function groupCollide(group, otherObject){
- 
+function groupCollide(group, otherObject, explosions){
+  
+
   for (let index = 0; index < group.length; index++) {
     const element = group[index];
     if(element.collide(otherObject)) {
+      if(otherObject.constructor.name=== "Player")
+      {
+        otherObject.health -= PLAYER_COLLISION_DAMAGE_POINTS;
+      };
+
+      if(otherObject.constructor.name === "Missle"){
+        explosions.push(new AnimatedSprite(blueExplosionSprite, {
+                x: otherObject.position.x,
+          y: otherObject.position.y}, 2 , 128, 16))
+      }
+      explosions.push(new AnimatedSprite(explosionSprite, {
+        x: element.position.x,
+        y: element.position.y
+      }, 2, 128, 16))
       group.splice(index, 1)
       return true
     }
@@ -30,10 +45,10 @@ function groupCollide(group, otherObject){
   return false
 }
 
-function twoGroupCollide(group1, group2){
+function twoGroupCollide(group1, group2, explosions){
   let collisions = 0;
   group1.forEach((group1Object, index) =>{ 
-    if(groupCollide(group2, group1Object)){
+    if(groupCollide(group2, group1Object, explosions)){
       collisions+=1;
       group1.splice(index, 1)
     }}
@@ -41,3 +56,11 @@ function twoGroupCollide(group1, group2){
 
   return collisions;
 }
+
+function convertToHexString(number){
+let hexString = number.toString(16);
+if (hexString.length % 2) {
+  hexString = '0' + hexString;
+}
+return hexString;
+}         
