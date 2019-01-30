@@ -6,6 +6,7 @@ class Asteroid {
     this.angleVelocity = angleVelocity;
     this.radius = radius;
     this.img = img;
+    
   }
 }
 
@@ -26,7 +27,7 @@ Asteroid.prototype.draw = function (ctx) {
   ctx.closePath();
 
   ctx.stroke();
-  ctx.scale(2, 2)
+  ctx.scale(2.5, 2.5)
   ctx.drawImage(this.img, -this.radius/2 , -this.radius/2, this.radius, this.radius)
  // ctx.arc(0, 0, this.radius, 0, 2 * Math.PI);
  
