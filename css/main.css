@@ -1,10 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Orbitron:500,700');
 
 body {
-  background-color: aquamarine;
+  margin: 0;
+  padding: 0;
+  background: url('../img/bg_universe.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   font-family: 'Orbitron',
     sans-serif;
   color: white;
+  min-height: 100vh;
 }
 
 #canvas {
@@ -55,4 +61,22 @@ body>* {
 
 #score {
   z-index: 100;
+  flex-grow: 1;
+}
+
+.info-container {
+  display: flex;
+
+}
+
+.health-wrapper {
+  width: 300px;
+  border: 3px solid white;
+  height: 30px;
+  margin: 1.4rem 1.4rem 0 1.4rem;
+}
+
+#health {
+  background: lime;
+  height: 100%;
 }
