@@ -6,6 +6,12 @@ class Player {
     this.angle = angle;
     this.thrust = false;
     this.radius = 25
+    this.health = 100;
+    this.thrustProps = {
+      greenComponent: 0,
+      thrustSize: 150,
+      thrustIncrement: 5
+    }
   }
 
   
@@ -55,6 +61,19 @@ Player.prototype.update = function () {
 
   this.velocity.x *= 0.99;
   this.velocity.y *= 0.99;
+
+  if (this.thrust){
+    if(this.thrustProps.thrustSize < 300){
+      this.thrustProps.thrustSize += this.thrustProps.thrustIncrement;
+    }
+
+    if (this.thrustProps.greenComponent < 255) {
+      this.thrustProps.greenComponent += this.thrustProps.thrustIncrement;
+    }
+  } else {
+    this.thrustProps.thrustSize = 150;
+    this.thrustProps.greenComponent = 0;
+  }
 }
 
 //Player.prototype.collide
@@ -155,6 +174,17 @@ Player.prototype.drawPlayer = function(ctx) {
   
   ctx.fill();
   ctx.stroke();
+
+  if(this.thrust){
+    ctx.beginPath();
+    ctx.moveTo(-20, 115);
+    ctx.fillStyle = `#FF${convertToHexString(this.thrustProps.greenComponent)}00`;
+    ctx.quadraticCurveTo(0, this.thrustProps.thrustSize, 20, 115);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+  }
+  
   
   ctx.restore();
 }
