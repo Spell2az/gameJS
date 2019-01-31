@@ -104,8 +104,24 @@ if(gameOn){
 
 }
 
-window.addEventListener("keydown", keyDownEventHandler);
-window.addEventListener("keyup", keyUpEventHandler);
+window.addEventListener("keydown", menuKeyHandlers )
+
+function menuKeyHandlers (e){
+  if (e.keyCode == keycode.W) {
+    selectNextMenuItem()
+  }
+  if(e.keyCode == keycode.S){
+    selectPreviousMenuItem()
+  }
+}
+
+function selectNextMenuItem(){
+  const checkboxes = document.querySelectorAll("input[type='radio']");
+  
+}
+
+window.addEventListener("keydown", keyDownEventHandlerGame);
+window.addEventListener("keyup", keyUpEventHandlerGame);
 
 function keyDownEventHandler(e) {
 

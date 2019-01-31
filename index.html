@@ -11,21 +11,39 @@
 
 <body>
 
-  <div class="canvas-bg sizing">
+  <div class="menu-wrapper">
+    <div class="menu">
+      <h1>ROCK DESTROYERS</h1>
+      <input type="radio" checked="checked" id="radio_start" name="radio">
+      <label for="radio_start">Start game</label>
 
-    <div class="canvas-bg-animated">
+      <input type="radio" name="radio" id="radio_options">
+      <label for="radio_options">Options</label>
+
+      <input type="radio" name="radio" id="radio_game-modes">
+      <label for="radio_game-modes">Game modes</label>
+
+      <input type="radio" name="radio" id="radio_credits">
+      <label for="radio_credits">Credits</label>
+    </div>
+  </div>
+  <div class="content">
+    <div class="canvas-bg sizing">
+
+      <div class="canvas-bg-animated">
+
+      </div>
 
     </div>
 
-  </div>
+    <canvas id="canvas" height="800" width="1200"></canvas>
 
-  <canvas id="canvas" height="800" width="1200"></canvas>
-
-  <div class="sizing info-container">
-    <h1 id="score">SCORE: 0</h1>
-    <h1>HEALTH</h1>
-    <div class="health-wrapper">
-      <div id="health"></div>
+    <div class="sizing info-container">
+      <h1 id="score">SCORE: 0</h1>
+      <h1>HEALTH</h1>
+      <div class="health-wrapper">
+        <div id="health"></div>
+      </div>
     </div>
   </div>
 </body>
