@@ -1,4 +1,5 @@
 class Player {
+  
   constructor(position = {
       x: 0,
       y: 0
@@ -34,11 +35,11 @@ Player.prototype.draw = function (ctx) {
 
 Player.prototype.update = function () {
   this.angle += this.angleVelocity;
+  // Fuel depletion
   if(this.fuel > 0){
     this.fuel -= 0.02;
   }
-  
-
+  // Bring ship to opposite side of canvas
   if( (this.position.x + this.velocity.x) < -50){
     this.position.x = WIDTH;
   }
@@ -51,16 +52,17 @@ Player.prototype.update = function () {
    } else {
      this.position.y = (this.position.y + this.velocity.y) % HEIGHT;
    }
-  
+  // Acceleration
   if (this.thrust) {
     const acc = angleToVector(this.angle);
     this.velocity.x += acc[0] * 0.1;
     this.velocity.y += acc[1] * 0.1;
   }
-
+  // Deceleration
   this.velocity.x *= 0.99;
   this.velocity.y *= 0.99;
 
+  // Update ThrustProps up to max size
   if (this.thrust){
     if(this.thrustProps.thrustSize < 300){
       this.thrustProps.thrustSize += this.thrustProps.thrustIncrement;
@@ -74,8 +76,6 @@ Player.prototype.update = function () {
     this.thrustProps.greenComponent = 0;
   }
 }
-
-//Player.prototype.collide
 
 Player.prototype.increaseAngleVelocity = function () {
   this.angleVelocity += 0.15;
@@ -111,11 +111,8 @@ Player.prototype.drawPlayer = function(ctx) {
   ctx.fill();
   
   // wings
-
   ctx.beginPath();
- 
   ctx.fillStyle = "#A5A5A5";
-
   ctx.moveTo(-30, -65);
   ctx.lineTo(-90, 125);
   ctx.lineTo(-60, 105);
@@ -129,7 +126,8 @@ Player.prototype.drawPlayer = function(ctx) {
   ctx.lineTo(-30, -65);
   ctx.fill();
   ctx.stroke();
-  // body
+
+  // Body
   ctx.beginPath();
   ctx.fillStyle = this.color;
   ctx.moveTo(-30, 105);
@@ -137,7 +135,6 @@ Player.prototype.drawPlayer = function(ctx) {
   ctx.lineTo(-30, 105);
   ctx.fill();
   ctx.stroke();
-
   ctx.fillStyle = "#666666";
   ctx.fillRect(-20, 105, 40, 10);
   
@@ -147,8 +144,7 @@ Player.prototype.drawPlayer = function(ctx) {
   ctx.ellipse(0, -15, 10, 30, 0, 0, 2 * Math.PI);
   ctx.fill();
  
-
-  
+  // Exhaust
   if(this.thrust){
     ctx.beginPath();
     ctx.moveTo(-20, 115);
@@ -157,9 +153,6 @@ Player.prototype.drawPlayer = function(ctx) {
     ctx.quadraticCurveTo(0, this.thrustProps.thrustSize, 20, 115);
     ctx.closePath();
     ctx.fill();
-    
   }
-  
-  
   ctx.restore();
 }
