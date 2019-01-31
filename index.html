@@ -11,23 +11,54 @@
 
 <body>
 
-  <div class="menu-wrapper">
+  <div id="menu-wrapper" class="menu-wrapper">
+    <h1>ROCK DESTROYERS</h1>
     <div class="menu">
-      <h1>ROCK DESTROYERS</h1>
-      <input type="radio" checked="checked" id="radio_start" name="radio">
+
+      <input type="radio" checked="checked" id="radio_start" name="radio_main">
       <label for="radio_start">Start game</label>
 
-      <input type="radio" name="radio" id="radio_options">
+      <input type="radio" name="radio_main" id="radio_options">
       <label for="radio_options">Options</label>
 
-      <input type="radio" name="radio" id="radio_game-modes">
+      <input type="radio" name="radio_main" id="radio_game_modes">
       <label for="radio_game-modes">Game modes</label>
 
-      <input type="radio" name="radio" id="radio_credits">
+      <input type="radio" name="radio_main" id="radio_credits">
       <label for="radio_credits">Credits</label>
     </div>
   </div>
-  <div class="content">
+  <div id="options">
+    <div class="menu">
+      <p>Number of asteroids</p>
+      <input type="radio" id="radio_low" name="radio_options">
+      <label for="radio_low">Just a few</label>
+
+      <input type="radio" checked="checked" name="radio_options" id="radio_medium">
+      <label for="radio_medium">Just right</label>
+
+      <input type="radio" name="radio_options" id="radio_high">
+      <label for="radio_high">Plenty</label>
+
+      <p>Press Enter to Select</p>
+    </div>
+  </div>
+  <div id="options">
+    <div class="menu">
+      <p>Game Modes</p>
+      <input type="radio" id="radio_single" name="radio_mode">
+      <label for="radio_low">Single Player</label>
+
+      <input type="radio" checked="checked" name="radio_mode" id="radio_deathmatch">
+      <label for="radio_medium">Just right</label>
+
+      <input type="radio" name="radio_options" id="radio_high">
+      <label for="radio_high">Plenty</label>
+
+      <p>Press Enter to Select</p>
+    </div>
+  </div>
+  <div id="game-content" class="content">
     <div class="canvas-bg sizing">
 
       <div class="canvas-bg-animated">
@@ -39,10 +70,20 @@
     <canvas id="canvas" height="800" width="1200"></canvas>
 
     <div class="sizing info-container">
-      <h1 id="score">SCORE: 0</h1>
-      <h1>HEALTH</h1>
-      <div class="health-wrapper">
-        <div id="health"></div>
+      <div class="progress-bar-wrapper">
+        <p class="player-info" id="score">SCORE: 0</p>
+      </div>
+      <div class="progress-bar-wrapper">
+        <p class="player-info">FUEL</p>
+        <div class="progress-bar">
+          <div id="fuel"></div>
+        </div>
+      </div>
+      <div class="progress-bar-wrapper">
+        <p class="player-info">HEALTH</p>
+        <div class="progress-bar">
+          <div id="health"></div>
+        </div>
       </div>
     </div>
   </div>

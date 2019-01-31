@@ -19,6 +19,9 @@ body {
 
 .canvas-bg {
   background-image: url('../img/blue_nebula.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   overflow: hidden;
 }
 
@@ -32,7 +35,7 @@ body {
 }
 
 #score {
-  font-weight: 500;
+
   padding-left: 2rem;
 }
 
@@ -52,27 +55,33 @@ body {
   }
 }
 
-#score {
-  z-index: 100;
+#timer {
   flex-grow: 1;
+  text-align: center;
 }
 
 .info-container {
   display: flex;
-
+  justify-content: space-between;
 }
 
-.health-wrapper {
-  width: 300px;
+.progress-bar-wrapper {
+  display: flex;
+  width: 33.33%;
+}
+
+.progress-bar {
+  width: 200px;
   border: 3px solid white;
   height: 30px;
-  margin: 1.4rem 1.4rem 0 1.4rem;
+  margin: 1.4rem 1.4rem 0 1rem;
 }
 
-#health {
+.progress-bar>div {
   background: lime;
   height: 100%;
 }
+
 
 .content {
   display: none;
@@ -81,66 +90,87 @@ body {
   min-height: 100vh;
 }
 
-.content > * {
+.content>* {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.menu{
-  display:flex;
+
+.menu {
+  display: flex;
   padding: 3rem;
   font-size: 2rem;
   border-radius: .5rem;
-  flex-direction:column;
-  background: linear-gradient( rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.4) 100%);
+  flex-direction: column;
+  background: linear-gradient(rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);
 }
+
 .menu-wrapper {
   display: block;
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 800px;
+  height: 800px;
   transform: translate(-50%, -50%);
 }
 
-
-input{
-  display:none;
+#options {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  text-align: center;
+  background: black;
 }
-label{
+
+input {
+  display: none;
+}
+
+label {
   text-transform: uppercase;
   margin: 1rem;
   display: block;
-  text-align:center;
+  text-align: center;
 }
 
-input[type=radio] + label {
+input[type=radio]+label {
   color: #ddd;
   text-shadow: 0 0 0.1em #72D4FF, 0 0 0.1em #72D4FF,
-        0 0 0.1em #72D4FF;
+    0 0 0.1em #72D4FF;
   transition: all 0.1s ease-in;
 }
 
-input[type=radio]:checked + label {
- 
+input[type=radio]:checked+label {
+
   color: white;
 
   animation: glow .5s ease-out alternate infinite;
-} 
+}
 
 @keyframes glow {
   0% {
     text-shadow: 0 0 0.3em #FF7575, 0 0 0.3em #FF7575,
-    0 0 0.3em #FF7575;
+      0 0 0.3em #FF7575;
   }
 
   100% {
     text-shadow: 0 0 0.1em #FF7575, 0 0 0.1em #FF7575,
-        0 0 0.1em #FF7575;
+      0 0 0.1em #FF7575;
   }
 }
 
-h1{
+h1 {
   font-size: 2.4rem;
   white-space: nowrap;
+  text-align: center;
+}
+
+.player-info {
+  font-size: 1.6rem;
 }

@@ -1,6 +1,6 @@
 const WIDTH = canvas.width;
 const HEIGHT = canvas.height;
-const MAX_NUMBER_OF_ASTEROIDS = 10;
+let MAX_NUMBER_OF_ASTEROIDS = 10;
 const MISSLE_LIFETIME_MAX = 100;
 const ASTEROID_EXCLUSION_RADIUS = 250;
 const PLAYER_COLLISION_DAMAGE_POINTS = 20;
@@ -24,17 +24,46 @@ const healthDisplay = document.getElementById("health")
 
 
 let gameOn = false;
+let gameMode = 'single';
+let gameState = gameSetup(gameMode);
 
-
+function gameSetup(mode){
+  if(mode == 'single'){
+     return {
+       player1: new Player({
+         x: WIDTH / 2,
+         y: HEIGHT / 2
+       }),
+       asteroids: [],
+       missles: [],
+       explosions: []
+     }
+  } else if (mode == 'deathmatch'){
+     return {
+       player1: new Player({
+         x: WIDTH / 6,
+         y: HEIGHT / 2
+       }),
+       player2: new Player({
+         x: WIDTH * 0.3,
+         y: HEIGHT / 2
+       }),
+       asteroids: [],
+       missles: [],
+       explosions: []
+     }
+  }
+ 
+}
 //const explosion = new AnimatedSprite(explosionSprite, 128, 128, 16, 15, 128, 16);
 //explosion.draw(ctx);
- const player = new Player({
-   x: WIDTH / 2,
-   y: HEIGHT / 2
- });
- const asteroids = [];
- let missles = [];
- const explosions = []
+//  const player = new Player({
+//    x: WIDTH / 2,
+//    y: HEIGHT / 2
+//  });
+//  const asteroids = [];
+//  let missles = [];
+//  const explosions = []
 
 function main(){
 
@@ -43,10 +72,10 @@ function main(){
   const ctx = canvas.getContext('2d');
   
   const makeAsteroids = () => {
-    while(asteroids.length < MAX_NUMBER_OF_ASTEROIDS){
+    while (gameState.asteroids.length < MAX_NUMBER_OF_ASTEROIDS) {
       const positionY = getRandomInt(0, HEIGHT);
       const positionX = getRandomInt(0, WIDTH);
-      const distance = getDistanceBetweenTwoPoints([player.position.x, player.position.y],
+      const distance = getDistanceBetweenTwoPoints([gameState.player1.position.x, gameState.player1.position.y],
         [positionX, positionY])
       if (distance > ASTEROID_EXCLUSION_RADIUS) {
           const velocityX = getRandom(- 0.5, 0.5);
@@ -54,7 +83,7 @@ function main(){
           const angle = Math.PI * getRandom(0, 2);
           const angleVelocity = getRandom(-0.1, 0.1);
           const radius = getRandomInt(25, 75);
-          asteroids.push(new Asteroid({
+          gameState.asteroids.push(new Asteroid({
             x: positionX,
             y: positionY
           }, angle, {
@@ -66,95 +95,193 @@ function main(){
     }
   }
 if(gameOn){
+ 
  drawFrame();
 }
- 
 
   function drawFrame() {
+    const fuel = document.getElementById('fuel');
 
-  
+    fuel.style.width = `${gameState.player1.fuel}%`;
     makeAsteroids();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    player.draw(ctx);
-    ctx.fillStyle = "red";
+    gameState.player1.draw(ctx);
     
-    asteroids.forEach(asteroid => asteroid.draw(ctx))
-    missles.forEach((missle, i) => {
+    
+    gameState.asteroids.forEach(asteroid => asteroid.draw(ctx))
+     gameState.missles.forEach((missle, i) => {
       if(!missle.collided && missle.lifeTime > MISSLE_LIFETIME_MAX){
-        missles.splice(i ,1);
+         gameState.missles.splice(i, 1);
       }
     })
-    missles.forEach(missle => missle.draw(ctx))
-    groupCollide(asteroids, player, explosions)
+     gameState.missles.forEach(missle => missle.draw(ctx))
+    groupCollide(gameState.asteroids, gameState.player1, gameState.explosions)
 
-    score += twoGroupCollide(missles, asteroids, explosions)
+    score += twoGroupCollide(gameState.missles, gameState.asteroids, gameState.explosions)
     scoreDisplay.textContent = `SCORE: ${score}`;
-    healthDisplay.style.width = `${player.health}%`;
+    healthDisplay.style.width = `${ gameState.player1.health}%`;
     if (gameOn) {
        window.requestAnimationFrame(drawFrame);
     }
-    explosions.forEach((explosion, i)=> {
+     gameState.explosions.forEach((explosion, i) => {
       explosion.draw(ctx);
       if(explosion.finished){
-        explosions.splice(i, 1);
+         gameState.explosions.splice(i, 1);
       }
     });
-      //ctx.drawImage(explosionSprite, 512, 0, 128, 128, -64, -64, 128, 128);
+    
   } 
 
 }
+const menuActions = {
+  radio_start: startGame,
+  radio_options: viewOptions,
+  radio_game_modes: selectGameMode,
+  radio_credits: viewCredits
+}
+
+const toggledElementIds = {
+  menu: 'menu-wrapper',
+  gameContent: 'game-content',
+  options: 'options',
+}
+
+const gameModes = {
+  singleScore: setSinglePlayerMaxScore,
+  singleNumberOfKills: setSinglePlayerNumberOfKills,
+  multiCoop: setMultiCoop,
+  multiDeathmatch: setMultiDeathMatch
+}
+
+const menu = {
+  options: false,
+  mainMenu: true,
+}
+
+function setSinglePlayerMaxScore () {}
+function setSinglePlayerNumberOfKills () {}
+function setMultiCoop () {}
+function setMultiDeathMatch () {}
 
 window.addEventListener("keydown", menuKeyHandlers )
 
 function menuKeyHandlers (e){
+ 
   if (e.keyCode == keycode.W) {
-    selectNextMenuItem()
+    if(menu.mainMenu){
+      selectNextMenuItem('radio_main')
+    }
+    if(menu.options){
+      selectNextMenuItem('radio_options')
+    }
   }
   if(e.keyCode == keycode.S){
-    selectPreviousMenuItem()
+
+    if (menu.mainMenu) {
+        selectPreviousMenuItem('radio_main')
+     }
+    if (menu.options) {
+      selectPreviousMenuItem('radio_options')
+    }
+   
+  }
+  if(e.keyCode == keycode.ENTER){
+   
+   if(menu.mainMenu){
+       const checkboxes = document.querySelectorAll("input[name='radio_main']");
+       const checkedId = [...checkboxes].find(radio => radio.checked).id;
+       menuActions[checkedId]();
+
+    } else
+    if (menu.options) {
+      const checkboxes = document.querySelectorAll("input[name='radio_options']");
+      const checkedId = [...checkboxes].find(radio => radio.checked).id;
+      optionSelected(checkedId);
+      closeOptions();
+    }
+    
+   
   }
 }
 
-function selectNextMenuItem(){
-  const checkboxes = document.querySelectorAll("input[type='radio']");
-  
+function optionSelected(checkedId) {
+  asteroidSetting = {
+    radio_low: 5,
+    radio_medium: 10,
+    radio_high: 15
+  }
+
+  MAX_NUMBER_OF_ASTEROIDS = asteroidSetting[checkedId];
 }
 
-window.addEventListener("keydown", keyDownEventHandlerGame);
-window.addEventListener("keyup", keyUpEventHandlerGame);
+function startGame(){
+  console.log('start game called')
+  // Hide menu
+  toggleElementDisplay(toggledElementIds.menu, false);
+  // Ahow canvas
+  toggleElementDisplay(toggledElementIds.gameContent, true);
+  
+  // initialize gameObjects
+  
+  
+  //remove menuKeyHandlers
+  window.removeEventListener("keydown", menuKeyHandlers)
+  //add game keyHandlers
+  window.addEventListener("keydown", keyDownHandlerGame);
+  window.addEventListener("keyup", keyUpHandlerGame);
+};
+function viewOptions () {
 
-function keyDownEventHandler(e) {
+  menu.options = true;
+  menu.mainMenu = false;
+  toggleElementDisplay(toggledElementIds.options, true);
+};
+function closeOptions(){
+  menu.options = false;
+  menu.mainMenu = true;
+  toggleElementDisplay(toggledElementIds.options, false);
+}
+function selectGameMode () {
+  console.log('select game mode called');
+};
+function viewCredits () {
+  console.log('view credits called')
+};
+
+// window.addEventListener("keydown", keyDownHandlerGame);
+// window.addEventListener("keyup", keyUpHandlerGame);
+function keyDownHandlerGame(e) {
 
   if (e.keyCode == 87) {
-    player.setThrust(true);
+     gameState.player1.setThrust(true);
   } else if (e.keyCode == 65) {
-    player.decreaseAngleVelocity();
+     gameState.player1.decreaseAngleVelocity();
   } else if (e.keyCode == 68) {
-    player.increaseAngleVelocity();
+     gameState.player1.increaseAngleVelocity();
   } else if (e.code == "Space") {
-    missles.push(new Missle({ ...player.position
-    }, player.angle, { ...player.velocity
+     gameState.missles.push(new Missle({ ...gameState.player1.position
+    }, gameState.player1.angle, { ...gameState.player1.velocity
     }, 10, missleImg))
   } else if (e.keyCode == "13") {
     console.log(gameOn);
     gameOn = true
-   main()
-  }
-  else if(e.keyCode == "27"){
+    main()
+  } else if (e.keyCode == "27") {
     gameOn = false;
   }
 }
 
-function keyUpEventHandler(e) {
+function keyUpHandlerGame(e) {
   if (e.keyCode == 87) {
-    player.setThrust(false);
+     gameState.player1.setThrust(false);
   } else if (e.keyCode == 65) {
-    player.increaseAngleVelocity();
+     gameState.player1.increaseAngleVelocity();
   } else if (e.keyCode == 68) {
-    player.decreaseAngleVelocity();
+     gameState.player1.decreaseAngleVelocity();
   }
 
 }
+
 
 
 

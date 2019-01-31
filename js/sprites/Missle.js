@@ -22,14 +22,9 @@ Missle.prototype.draw = function (ctx) {
 
   ctx.save();
   ctx.translate(this.position.x, this.position.y)
-  
   ctx.rotate(this.angle);
-  // ctx.fillStyle = "white";
-  // ctx.beginPath();
-  // ctx.strokeStyle = "lime"
-  // ctx.arc(0, 0, this.radius, 0, Math.PI * 2 );
   ctx.scale(3, 3)
-  ctx.drawImage(this.img, -this.radius / 2, -this.radius / 2, this.radius, this.radius)
+  ctx.drawImage(this.img, -this.radius / 2, -this.radius / 2 , this.radius, this.radius)
   ctx.stroke();
   ctx.restore();
   this.update();

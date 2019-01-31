@@ -64,3 +64,22 @@ if (hexString.length % 2) {
 }
 return hexString;
 }         
+
+function selectNextMenuItem(name) {
+  const checkboxes = document.querySelectorAll(`input[name='${name}']`);
+  const checkedItemIdx = [...checkboxes].findIndex(checkbox => checkbox.checked)
+  const nextItemIdx = (checkedItemIdx + checkboxes.length - 1) % checkboxes.length;
+  checkboxes[nextItemIdx].checked = true;
+}
+
+function selectPreviousMenuItem(name) {
+  const checkboxes = document.querySelectorAll(`input[name='${name}']`);
+  const checkedItemIdx = [...checkboxes].findIndex(checkbox => checkbox.checked)
+  const previousItemIdx = checkedItemIdx === checkboxes.length - 1 ? 0 : checkedItemIdx + 1;
+  checkboxes[previousItemIdx].checked = true;
+}
+
+function toggleElementDisplay(elementID, isVisible) {
+  const element = document.getElementById(elementID);
+  element.style.display = isVisible ? 'block' : 'none';
+}
