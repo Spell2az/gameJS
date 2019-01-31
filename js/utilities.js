@@ -20,20 +20,23 @@ function getRandom(min, max) {
 
 function groupCollide(group, otherObject, explosions){
   
-
   for (let index = 0; index < group.length; index++) {
     const element = group[index];
     if(element.collide(otherObject)) {
       if(otherObject.constructor.name=== "Player")
       {
         otherObject.health -= PLAYER_COLLISION_DAMAGE_POINTS;
-      };
-
-      if(otherObject.constructor.name === "Missle"){
+        
+        if (element.constructor.name === "Missle") {
+          otherObject.health -= PLAYER_COLLISION_DAMAGE_POINTS;
+        }
+      }
+      else if(otherObject.constructor.name === "Missle"){
         explosions.push(new AnimatedSprite(blueExplosionSprite, {
                 x: otherObject.position.x,
           y: otherObject.position.y}, 2 , 128, 16))
       }
+      
       explosions.push(new AnimatedSprite(explosionSprite, {
         x: element.position.x,
         y: element.position.y
@@ -82,4 +85,23 @@ function selectPreviousMenuItem(name) {
 function toggleElementDisplay(elementID, isVisible) {
   const element = document.getElementById(elementID);
   element.style.display = isVisible ? 'block' : 'none';
+}
+
+function toggleMenuListeners(areActive) {
+  areActive ? window.addEventListener("keydown", menuKeyHandlers) : window.removeEventListener("keydown", menuKeyHandlers)
+}
+
+function toggleGameListeners(areActive) {
+  if (areActive) {
+    window.addEventListener("keydown", keyDownHandlerGame);
+    window.addEventListener("keyup", keyUpHandlerGame);
+    return;
+  }
+  window.removeEventListener("keydown", keyDownHandlerGame);
+  window.removeEventListener("keyup", keyUpHandlerGame);
+}
+
+function toggleGameRestartListener(areActive){
+  areActive && window.addEventListener('keydown', gameRestartHandler);
+  !areActive && window.removeEventListener('keydown', gameRestartHandler);
 }

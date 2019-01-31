@@ -30,7 +30,6 @@ Missle.prototype.draw = function (ctx) {
   this.update();
 }
 Missle.prototype.collide = function (object) {
-
   return getDistanceBetweenTwoPoints([this.position.x, this.position.y], [object.position.x, object.position.y]) <= this.radius + object.radius
 }
 

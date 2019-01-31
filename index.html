@@ -24,8 +24,8 @@
       <input type="radio" name="radio_main" id="radio_game_modes">
       <label for="radio_game-modes">Game modes</label>
 
-      <input type="radio" name="radio_main" id="radio_credits">
-      <label for="radio_credits">Credits</label>
+      <input type="radio" name="radio_main" id="radio_instructions">
+      <label for="radio_instructions">instructions</label>
     </div>
   </div>
   <div id="options">
@@ -43,17 +43,14 @@
       <p>Press Enter to Select</p>
     </div>
   </div>
-  <div id="options">
+  <div id="game-mode">
     <div class="menu">
       <p>Game Modes</p>
-      <input type="radio" id="radio_single" name="radio_mode">
-      <label for="radio_low">Single Player</label>
+      <input type="radio" checked="checked" id="radio_single" name="radio_mode">
+      <label for="radio_single">Single Player</label>
 
-      <input type="radio" checked="checked" name="radio_mode" id="radio_deathmatch">
-      <label for="radio_medium">Just right</label>
-
-      <input type="radio" name="radio_options" id="radio_high">
-      <label for="radio_high">Plenty</label>
+      <input type="radio" name="radio_mode" id="radio_deathmatch">
+      <label for="radio_deathmatch">Player 1 vs. Player 2</label>
 
       <p>Press Enter to Select</p>
     </div>
@@ -64,27 +61,78 @@
       <div class="canvas-bg-animated">
 
       </div>
-
     </div>
 
     <canvas id="canvas" height="800" width="1200"></canvas>
 
-    <div class="sizing info-container">
-      <div class="progress-bar-wrapper">
-        <p class="player-info" id="score">SCORE: 0</p>
-      </div>
-      <div class="progress-bar-wrapper">
-        <p class="player-info">FUEL</p>
-        <div class="progress-bar">
-          <div id="fuel"></div>
+    <div id="single-player-info" class="sizing info-container">
+      <div class="info-container">
+        <div class="progress-bar-wrapper">
+          <p class="player-info" id="score">SCORE: 0</p>
+        </div>
+        <div class="progress-bar-wrapper">
+          <p class="player-info">FUEL</p>
+          <div class="progress-bar">
+            <div id="fuel"></div>
+          </div>
+        </div>
+        <div class="progress-bar-wrapper">
+          <p class="player-info">HEALTH</p>
+          <div class="progress-bar">
+            <div id="health"></div>
+          </div>
         </div>
       </div>
-      <div class="progress-bar-wrapper">
-        <p class="player-info">HEALTH</p>
-        <div class="progress-bar">
-          <div id="health"></div>
+    </div>
+    <div id="multiplayer-info" class="sizing info-container">
+      <div class="info-container">
+        <div class="progress-bar-wrapper">
+          <p class="player-info">P1 HEALTH</p>
+          <div class="progress-bar">
+            <div id="p1-health"></div>
+          </div>
+        </div>
+        <div class="progress-bar-wrapper">
+          <p class="player-info">P2 HEALTH</p>
+          <div class="progress-bar">
+            <div id="p2-health"></div>
+          </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div id="gameover" class="sizing">
+    <div>
+      <p id="messagebox"></p>
+      <p>Press Enter to continue</p>
+    </div>
+  </div>
+  <div id="instructions" class="sizing">
+    <div class="info-container">
+      <h2>Instructions</h2>
+      <h3>Single Player Mode</h3>
+      <p>Shoot down as many asteroids as you can while you have fuel, but be careful, you can die if you crash into
+        asteroids too much</p>
+      <h3>Player 1 vs. Player 2 Deathmatch</h3>
+      <p>Shoot down your enemy in this vicious dogfight.</p>
+      <h3>Player 1 Controls</h3>
+      <ul>
+        <li>Steer Left: Left Arrow</li>
+        <li>Steer Right: Right Arrow</li>
+        <li>Thrust: Up Arrow</li>
+        <li>Shoot: . [Period]</li>
+
+      </ul>
+      <h3>Player 2 Controls</h3>
+      <ul>
+        <li>Steer Left: A</li>
+        <li>Steer Right: D</li>
+        <li>Thrust: W</li>
+        <li>Shoot: [Space]</li>
+
+      </ul>
+      <p>During Game press ESC to return to Main Menu</p>
+      <p>Press Enter to continue</p>
     </div>
   </div>
 </body>
@@ -95,7 +143,8 @@
 <script type="text/javascript" src="js/sprites/Missle.js"></script>
 <script type="text/javascript" src="js/sprites/Player.js"></script>
 <script type="text/javascript" src="js/keycode.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/utilities.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+
 
 </html>

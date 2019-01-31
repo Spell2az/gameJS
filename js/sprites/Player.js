@@ -1,5 +1,8 @@
 class Player {
-  constructor(position = {x: 0, y: 0}, angle = 0) {
+  constructor(position = {
+      x: 0,
+      y: 0
+    }, color = "#FF0000", angle = 0) {
     this.position = {...position}
     this.velocity = {x: 0, y: 0}
     this.angleVelocity = 0;
@@ -13,6 +16,7 @@ class Player {
       thrustIncrement: 5
     };
     this.fuel = 100;
+    this.color = color; 
   }
 
   
@@ -127,7 +131,7 @@ Player.prototype.drawPlayer = function(ctx) {
   ctx.stroke();
   // body
   ctx.beginPath();
-  ctx.fillStyle = "#FF3D3D";
+  ctx.fillStyle = this.color;
   ctx.moveTo(-30, 105);
   ctx.bezierCurveTo(-40, -155, 40, -155, 30, 105);
   ctx.lineTo(-30, 105);

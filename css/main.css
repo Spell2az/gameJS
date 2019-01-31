@@ -82,6 +82,19 @@ body {
   height: 100%;
 }
 
+.progress-bar #p2-health {
+  background: blue;
+  height: 100%;
+}
+
+.progress-bar #p1-health {
+  background: red;
+  height: 100%;
+}
+
+#multiplayer-info {
+  display: none;
+}
 
 .content {
   display: none;
@@ -117,6 +130,18 @@ body {
 }
 
 #options {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  text-align: center;
+  background: black;
+}
+
+#game-mode {
   display: none;
   position: absolute;
   top: 50%;
@@ -173,4 +198,59 @@ h1 {
 
 .player-info {
   font-size: 1.6rem;
+  white-space: nowrap;
+  padding-left: 1rem;
+}
+
+#gameover {
+  display: none;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  text-align: center;
+  background: black;
+}
+
+#messagebox {
+  font-size: 2rem;
+}
+
+#gameover>div {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+#instructions {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  text-align: center;
+  background: black;
+}
+
+#instructions>div {
+  display: flex;
+  flex-direction: column;
+  letter-spacing: 2px;
+}
+
+#instructions p:not(:last-child) {
+  border-bottom: 1px solid white;
+  padding-bottom: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+ul {
+  list-style: none;
 }
