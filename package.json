@@ -1,0 +1,19 @@
+{
+  "name": "gamejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./js/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Spell2az/gameJS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Spell2az/gameJS/issues"
+  },
+  "homepage": "https://github.com/Spell2az/gameJS#readme"
+}
